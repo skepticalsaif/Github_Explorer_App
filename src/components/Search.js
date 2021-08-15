@@ -1,8 +1,12 @@
 import React from "react";
+import { withRouter } from 'react-router-dom'
 
 class Search extends React.Component {
-  state = {
-    username: ''
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: props.username || ''
+    }
   }
 
   // 2-way mapping of the input field
@@ -14,7 +18,7 @@ class Search extends React.Component {
   }
 
   render() {
-    const { fetchData } = this.props
+    const { history } = this.props
     const { username } = this.state
     return (
       <div className="bg-dark">
@@ -33,7 +37,11 @@ class Search extends React.Component {
                   />
                 </div>
                 <div className="col-3">
-                  <button onClick={() => fetchData(username)} className="btn btn-large btn-success">Search</button>
+                  <button
+                    onClick={() => history.push(`/${username}`)}
+                    className="btn btn-large btn-success">
+                    Search
+                  </button>
                 </div>
               </div>
             </div>
@@ -44,4 +52,4 @@ class Search extends React.Component {
   }
 }
 
-export default Search;
+export default withRouter(Search);
