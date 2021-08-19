@@ -46,7 +46,6 @@ class App extends React.Component {
     if (res.ok) {
       const data = await res.json()
       console.log(data)
-      // saving the data in the internal state
       return { data }
     }
     const error = (await res.json()).message
@@ -66,9 +65,8 @@ class App extends React.Component {
     return { error }
   }
 
-  fetchData = async (username, page) => {
+  fetchData = async (username) => {
     this.setState({ loading: true }, async () => {
-      // fetch github api
       try {
         const [user, reposit] = await Promise.all(
           [
@@ -114,19 +112,8 @@ class App extends React.Component {
     });
   }
 
-  // handlePageChange = (page) => {
-  //   this.setState({ page }, () => this.loadPage());
-  // }
-
-  // handlePageSizeChange = (e) => {
-  //   this.setState({
-  //     pageSize: e.target.value,
-  //   }, () => this.loadPage())
-  // }
-
   render() {
-    const { userDataError, repositError, loading, user, reposit, //pageSize 
-    } = this.state
+    const { userDataError, repositError, loading, user, reposit } = this.state
 
     const { match } = this.props
 
@@ -135,7 +122,6 @@ class App extends React.Component {
     return (
       <>
         <Search
-          // fetchData={this.fetchData}
           username={match.params.username}
         />
         <div className="container">
@@ -148,34 +134,9 @@ class App extends React.Component {
 
           {renderRepos && (
             <React.Fragment>
-              {/* <div className="mb-4">
-                {[...new Array(Math.ceil(user.public_repos / pageSize))].map(
-                  (_, index) => (
-                    <button
-                      key={index}
-                      className="btn btn-success m-2"
-                      onClick={() => this.handlePageChange(index + 1)}>
-                      {index + 1}
-                    </button>
-                  ),
-                )}
-              </div> */}
-
-              {/* <div className="d-inline-block mb-4">
-                <select
-                  className="form-control"
-                  value={pageSize}
-                  onChange={this.handlePageSizeChange}>
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="30">30</option>
-                </select>
-              </div> */}
-
               {
                 reposit.map(repo => <RepoCard key={repo.id} repo={repo} />)
               }
-
             </React.Fragment>
           )}
         </div>
