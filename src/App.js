@@ -14,7 +14,7 @@ class App extends React.Component {
     userDataError: null,
     repositError: null,
     loading: false,
-    pageSize: 10, // earlier it was a string = '10'
+    pageSize: 10,
     page: 1,
     fetchingRepos: false
   }
